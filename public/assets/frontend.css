@@ -1,0 +1,22 @@
+.navbar {
+    --bs-navbar-active-color: var(--bs-primary);
+}
+
+.auth-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-user img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.logo img {
+    height: 80px;
+    object-fit: cover;
+
+}
