@@ -12,11 +12,15 @@ Auth::routes();
 
 // Routes publiques (visiteur/client)
 Route::get('/', [FrontendController::class, 'index'])->name('homepage');
-Route::get('/products', [FrontendController::class, 'products'])->name('products');
+Route::get('/product/{slug}', [FrontendController::class, 'showProduct'])->name('product.show');
 Route::get('/cart', [FrontendController::class, 'cart'])->name('cart');
+Route::get('/add-to-cart/{id}', [FrontendController::class, 'addToCart'])->name('product.add-to-cart');
 
 //grouped routes with auth middleware // ADD here checkout and confirmation routes
 Route::middleware(['auth'])->group(function () {
+    Route::post('/cart/sync', [FrontendController::class, 'syncCart'])->name('product.cart-sync');
+    Route::get('/cart/update-quantity', [FrontendController::class, 'updateCartQuantity'])->name('product.cart-update-quantity');
+    Route::get('/cart/delete/{id}', [FrontendController::class, 'deleteCartItem'])->name('product.cart-delete');
     Route::get('/orders', [FrontendController::class, 'order'])->name('orders');
     Route::get('/users', [FrontendController::class, 'users'])->name('users');
     Route::get('/profile', [FrontendController::class, 'profile'])->name('profile');
