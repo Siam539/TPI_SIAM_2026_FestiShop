@@ -23,21 +23,18 @@ class CategorySeeder extends Seeder
                 'slug' => 'mariage',
             ],
             [
-                'name' => 'Bébé & Enfants',
-                'slug' => 'bebe-enfants',
+                'name' => 'Halloween',
+                'slug' => 'halloween',
             ],
             [
                 'name' => 'Noël',
                 'slug' => 'noel',
             ],
             [
-                'name' => 'Halloween',
-                'slug' => 'halloween',
+                'name' => 'Prenatal',
+                'slug' => 'prenatal',
             ],
-            [
-                'name' => 'Pâques',
-                'slug' => 'paques',
-            ]
+            
         ];
 
         foreach ($categories as $category) {
