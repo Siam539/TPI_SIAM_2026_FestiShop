@@ -21,5 +21,14 @@ class UserSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'role' => 'admin',
         ]);
+
+         User::create([
+            'first_name' => 'Manager',
+            'last_name' => 'Livreur',
+            'email' => 'kazi.siam09@gmail.com',
+            'phone' => '+41786405092',
+            'password' => bcrypt('12345678'),
+            'role' => 'manutentionnaire',
+        ]);
     }
 }
