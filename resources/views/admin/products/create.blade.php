@@ -1,3 +1,4 @@
+{{-- Formulaire de création d'un nouveau produit avec upload d'image --}}
 @extends('layouts.admin')
 
 @section('content')

@@ -1,3 +1,9 @@
+{{--
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel UI (php artisan ui bootstrap --auth)
+ | Modifié : adapté au design et au layout du projet FestiShop
+ |----------------------------------------------------------
+--}}
 @extends('layouts.frontend')
 
 @section('content')
@@ -5,16 +11,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+                <div class="card-header">Confirmer le mot de passe</div>
 
                 <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
+                    Veuillez confirmer votre mot de passe avant de continuer.
 
                     <form method="POST" action="{{ route('password.confirm') }}">
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end">Mot de passe</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -30,12 +36,12 @@
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
+                                    Confirmer le mot de passe
                                 </button>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                        Mot de passe oublié ?
                                     </a>
                                 @endif
                             </div>

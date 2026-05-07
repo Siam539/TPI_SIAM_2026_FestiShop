@@ -1,3 +1,42 @@
+{{-- Page listant toutes les commandes de l'utilisateur connecté avec leur statut --}}
+@push('styles')
+<style>
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07) !important;
+    }
+
+    .card-header {
+        border-radius: 12px 12px 0 0 !important;
+        background-color: #fafafa !important;
+        border-bottom: 1px solid #f0e6ff;
+        padding: 1rem 1.25rem;
+    }
+
+    .text-primary {
+        color: #9c27b0 !important;
+    }
+
+    .btn-outline-primary {
+        color: #9c27b0;
+        border-color: #9c27b0;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #9c27b0;
+        border-color: #9c27b0;
+        color: #fff;
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 1.8rem;
+    }
+</style>
+@endpush
 @extends('layouts.frontend')
 
 @section('content')
@@ -5,130 +44,74 @@
 
         <h1 class="mb-4">Mes Commandes</h1>
 
-        {{-- Commande 1 : Livrée --}}
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
-                <div>
-                    <h6 class="mb-0">Commande <strong>#00124</strong></h6>
-                    <small class="text-muted">Passée le 15 avril 2026</small>
-                </div>
-                <span class="badge bg-success fs-6">
-                    <i class="fa-solid fa-check me-1"></i>Livrée
-                </span>
-            </div>
-            <div class="card-body">
-
-                {{-- Article --}}
-                <div class="row align-items-center mb-3">
-                    <div class="col-md-2">
-                        <img src="{{ asset('images/products/banderoles.jpg') }}" class="img-fluid rounded" alt="Riethmüller Banderoles" style="max-height: 80px; object-fit: contain;">
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="mb-1">Riethmüller Banderoles</h6>
-                        <small class="text-muted">Anniversaire · Quantité : 2</small>
-                    </div>
-                    <div class="col-md-4 text-md-end">
-                        <strong>11.80 CHF</strong>
-                    </div>
-                </div>
-
-                <hr>
-
-                {{-- Total + Détails --}}
-                <div class="d-flex justify-content-between align-items-center">
+        @forelse ($orders as $order)
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
                     <div>
-                        <small class="text-muted d-block">Total</small>
-                        <strong class="fs-5 text-primary">11.80 CHF</strong>
+                        <h6 class="mb-0">Commande <strong>#{{ $order->id }}</strong></h6>
+                        <small class="text-muted">Passée le {{ $order->created_at->format('d-m-Y | H:i') }}</small>
                     </div>
-                    <button class="btn btn-outline-primary">
-                        <i class="fa-solid fa-eye me-2"></i>Voir les détails
-                    </button>
+                    @if ($order->status == 'open')
+                        <span class="badge bg-warning text-dark fs-6">
+                            <i class="fa-solid fa-box me-1"></i>Ouverte
+                        </span>
+                    @elseif($order->status == 'preparation')
+                        <span class="badge bg-info text-dark fs-6">
+                            <i class="fa-solid fa-box me-1"></i>En préparation
+                        </span>
+                    @elseif($order->status == 'awaiting')
+                        <span class="badge bg-warning text-dark fs-6">
+                            <i class="fa-solid fa-clock me-1"></i>En attente
+                        </span>
+                    @elseif($order->status == 'shipping')
+                        <span class="badge bg-primary fs-6">
+                            <i class="fa-solid fa-truck-fast me-1"></i>En cours d'envoi
+                        </span>
+                    @elseif($order->status == 'delivered')
+                        <span class="badge bg-success fs-6">
+                            <i class="fa-solid fa-circle-check me-1"></i>Livrée
+                        </span>
+                    @endif
                 </div>
+                <div class="card-body">
 
+                    {{-- Article --}}
+                    @foreach ($order->orderItems as $item)
+                        <div class="row align-items-center mb-3">
+                            <div class="col-md-2">
+                                <img src="{{ asset($item->product?->image) }}" class="img-fluid rounded" alt="{{ $item->product?->name }}" style="max-height: 80px; object-fit: contain;">
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-1">{{ $item->product?->name }}</h6>
+                                <small class="text-muted">{{ $item->product?->category?->name }} · Quantité : {{ $item->quantity }}</small>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <strong>{{ $item->unit_price * $item->quantity }} CHF</strong>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <hr>
+
+                    {{-- Total + Détails --}}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted d-block">Total</small>
+                            <strong class="fs-5 text-primary">{{ $order->total_price }} CHF</strong>
+                        </div>
+                        <a href="{{ route('order-details', $order->id) }}" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-eye me-2"></i>Voir les détails
+                        </a>
+                    </div>
+
+                </div>
             </div>
-        </div>
-
-        {{-- Commande 2 : En cours d'envoi --}}
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
-                <div>
-                    <h6 class="mb-0">Commande <strong>#00125</strong></h6>
-                    <small class="text-muted">Passée le 18 avril 2026</small>
+        @empty
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <p class="text-center">Vous n'avez aucune commande</p>
                 </div>
-                <span class="badge bg-primary fs-6">
-                    <i class="fa-solid fa-truck me-1"></i>En cours d'envoi
-                </span>
             </div>
-            <div class="card-body">
-
-                <div class="row align-items-center mb-3">
-                    <div class="col-md-2">
-                        <img src="{{ asset('images/products/happy-birthday.jpg') }}" class="img-fluid rounded" alt="I Am Creative Set" style="max-height: 80px; object-fit: contain;">
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="mb-1">I Am Creative Set</h6>
-                        <small class="text-muted">Anniversaire · Quantité : 1</small>
-                    </div>
-                    <div class="col-md-4 text-md-end">
-                        <strong>23.90 CHF</strong>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <small class="text-muted d-block">Total</small>
-                        <strong class="fs-5 text-primary">23.90 CHF</strong>
-                    </div>
-                    <button class="btn btn-outline-primary">
-                        <i class="fa-solid fa-eye me-2"></i>Voir les détails
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- Commande 3 : En préparation --}}
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center flex-wrap">
-                <div>
-                    <h6 class="mb-0">Commande <strong>#00126</strong></h6>
-                    <small class="text-muted">Passée le 21 avril 2026</small>
-                </div>
-                <span class="badge bg-warning text-dark fs-6">
-                    <i class="fa-solid fa-box me-1"></i>En préparation
-                </span>
-            </div>
-            <div class="card-body">
-
-                <div class="row align-items-center mb-3">
-                    <div class="col-md-2">
-                        <img src="{{ asset('images/products/birthday-girl.jpg') }}" class="img-fluid rounded" alt="MU Style Écharpe Birthday Girl" style="max-height: 80px; object-fit: contain;">
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="mb-1">MU Style Écharpe "Birthday Girl" + couronne</h6>
-                        <small class="text-muted">Anniversaire · Quantité : 1</small>
-                    </div>
-                    <div class="col-md-4 text-md-end">
-                        <strong>14.90 CHF</strong>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <small class="text-muted d-block">Total</small>
-                        <strong class="fs-5 text-primary">14.90 CHF</strong>
-                    </div>
-                    <button class="btn btn-outline-primary">
-                        <i class="fa-solid fa-eye me-2"></i>Voir les détails
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
+        @endforelse
     </div>
 @endsection

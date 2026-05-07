@@ -1,58 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FestiShop — Guide d'installation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Projet TPI — CFPT Informatique, Développement d'applications**
+Kazi Al Tahsib Siam | IFDAP4B – 4e | 2025–2026
 
-## About Laravel
+Site e-commerce développé avec Laravel (PHP 8.3+)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prérequis techniques
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Logiciel          | Version minimale |
+|-------------------|-----------------|
+| WSL (Ubuntu/Debian) | 2.x           |
+| PHP               | 8.3+            |
+| Composer          | 2.x             |
+| Node.js + npm     | 18+             |
+| MySQL / MariaDB   | 8.x             |
+| phpMyAdmin        | Toute version récente |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Étapes d'installation
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Récupérer le projet
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Ouvrir WSL et se placer dans le dossier de travail, puis cloner ou copier le projet.
 
-## Agentic Development
+### 2. Créer la base de données
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Ouvrir phpMyAdmin dans le navigateur (`http://localhost/phpmyadmin`) et créer une nouvelle base de données nommée **festishop**.
 
-```bash
-composer require laravel/boost --dev
+### 3. Configurer le fichier `.env`
 
-php artisan boost:install
+Ouvrir le projet dans VS Code, copier `.env.example` en `.env`, puis renseigner les informations de connexion à la base de données :
+
+```env
+DB_DATABASE=festishop
+DB_USERNAME=votre_utilisateur
+DB_PASSWORD=votre_mot_de_passe
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 4. Générer la clé d'application
 
-## Contributing
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 5. Installer les dépendances PHP
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 6. Créer les tables et insérer les données de démonstration
 
-## Security Vulnerabilities
+```bash
+php artisan migrate --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Cette commande crée toutes les tables et insère les données de test (catégories, produits, utilisateurs).
 
-## License
+### 7. Installer les dépendances JavaScript et compiler les assets
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+npm install
+npm run build
+```
+
+### 8. Lancer le serveur de développement
+
+```bash
+php artisan serve
+```
+
+Le site est ensuite accessible à l'adresse : `http://127.0.0.1:8000`
+
+---
+
+## Comptes de démonstration
+
+| Rôle             | Email               | Mot de passe |
+|------------------|---------------------|-------------|
+| Administrateur   | admin@gmail.com     | 12345678    |
+| Manutentionnaire | manager@gmail.com   | 12345678    |
+| Client           | S'inscrire via le site | —        |
+
+---
+
+## Informations du projet
+
+| Champ         | Valeur                              |
+|---------------|-------------------------------------|
+| Date de début | 20 avril 2026                       |
+| Date de fin   | 7 mai 2026                          |
+| Maître TPI    | Yves Juillerat                      |
+| Expert 1      | M. Yohann Vila                      |
+| Expert 2      | M. Frank Villaro-Dixon              |

@@ -1,5 +1,10 @@
 <?php
 
+/*
+ | Table : categories
+ | Stocke les catégories de produits (nom unique + slug).
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

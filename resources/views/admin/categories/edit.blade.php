@@ -1,3 +1,4 @@
+{{-- Formulaire de modification d'une catégorie existante --}}
 @extends('layouts.admin')
 @section('content')
     <div class="card shadow-sm">

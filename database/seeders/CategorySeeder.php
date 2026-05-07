@@ -6,6 +6,9 @@ use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Insère les catégories de test : Anniversaire, Mariage, Halloween, Noël, Prenatal.
+ */
 class CategorySeeder extends Seeder
 {
     /**

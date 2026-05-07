@@ -1,3 +1,61 @@
+{{-- Page de détail d'un produit : image, description, prix, stock et ajout au panier --}}
+@push('styles')
+<style>
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07) !important;
+    }
+
+    .badge.bg-secondary {
+        background-color: #f0e6ff !important;
+        color: #7b1fa2;
+        font-weight: 500;
+        font-size: 0.75rem;
+        border-radius: 20px;
+        padding: 4px 10px;
+    }
+
+    .text-primary {
+        color: #9c27b0 !important;
+    }
+
+    .text-success {
+        font-size: 0.85rem;
+    }
+
+    .text-danger {
+        font-size: 0.85rem;
+    }
+
+    .btn-primary {
+        background-color: #9c27b0;
+        border-color: #9c27b0;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background-color: #7b1fa2;
+        border-color: #7b1fa2;
+    }
+
+    .form-control:focus {
+        border-color: #9c27b0;
+        box-shadow: 0 0 0 0.2rem rgba(156, 39, 176, 0.15);
+    }
+
+    .breadcrumb-item a {
+        color: #9c27b0;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        color: #7b1fa2;
+        text-decoration: underline;
+    }
+</style>
+@endpush
 @extends('layouts.frontend')
 
 @section('content')

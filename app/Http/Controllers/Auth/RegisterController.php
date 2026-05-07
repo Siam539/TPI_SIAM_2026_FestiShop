@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/*
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel UI (php artisan ui bootstrap --auth)
+ | Modifié : champs adaptés au modèle User du projet (first_name, last_name, phone)
+ |----------------------------------------------------------
+ */
 class RegisterController extends Controller
 {
     /*

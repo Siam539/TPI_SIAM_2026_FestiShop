@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Représente une ligne de commande (produit + quantité + prix unitaire au moment de l'achat).
+ */
 #[Guarded(['id'])]
 class OrderItem extends Model
 {

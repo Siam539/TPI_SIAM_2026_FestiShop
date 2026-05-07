@@ -1,5 +1,13 @@
 <?php
 
+/*
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel
+ | Modifié : structure de la table users adaptée au projet
+ | (first_name, last_name, phone, role, is_active, billing_address, shipping_address)
+ |----------------------------------------------------------
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

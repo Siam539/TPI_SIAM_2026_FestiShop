@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Point d'entrée du seeding : appelle les seeders dans le bon ordre.
+ */
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;

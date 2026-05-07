@@ -1,3 +1,4 @@
+{{-- Layout de l'interface d'administration : sidebar de navigation et zone de contenu --}}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,7 +10,29 @@
         <link rel="icon" type="image/png" href="{{ asset('favvvicon.jpg') }}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="{{ asset('assets/frontend.css') }}">
+        <style>
+            .navbar {
+                --bs-navbar-active-color: var(--bs-primary);
+            }
+
+            .auth-user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .auth-user img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .logo img {
+                height: 80px;
+                object-fit: cover;
+            }
+        </style>
         @stack('styles')
     </head>
 
@@ -29,21 +52,30 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.products') ? 'active' : '' }}" href="{{ route('admin.products') }}">
-                                <i class="fa-solid fa-box me-1"></i>Produits
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}" href="{{ route('admin.users') }}">
-                                <i class="fa-solid fa-users me-1"></i>Utilisateurs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.orders') ? 'active' : '' }}" href="{{ route('admin.orders') }}">
-                                <i class="fa-solid fa-clipboard-list me-1"></i>Commandes
-                            </a>
-                        </li>
+                        @if (auth()->user()->role == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
+                                    <i class="fa-solid fa-box me-1"></i>Produits
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">
+                                    <i class="fa-solid fa-tag me-1"></i>Catégories
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                                    <i class="fa-solid fa-users me-1"></i>Utilisateurs
+                                </a>
+                            </li>
+                        @endif
+                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'manutentionnaire')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
+                                    <i class="fa-solid fa-clipboard-list me-1"></i>Commandes
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     {{-- Profil admin avec nom EN ROUGE (critère A20) --}}
@@ -76,7 +108,7 @@
                 </div>
             </nav>
 
-            <div class="py-3">
+            <div class="py-5">
                 @yield('content')
             </div>
         </div>
@@ -84,6 +116,11 @@
         <!-- Scripts -->
         <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function convertToSlug(text) {
+                return text.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+            }
+        </script>
         @stack('scripts')
     </body>
 

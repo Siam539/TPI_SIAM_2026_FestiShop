@@ -10,8 +10,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
 
+/**
+ * Gère le CRUD des produits dans l'interface admin,
+ * incluant le traitement et la compression des images via Intervention Image.
+ */
 class ProductController extends Controller
 {
+    // Liste les produits avec filtres par nom, catégorie et statut
     function index(Request $request)
     {
         $categories = Category::orderBy('name', 'asc')->get();
@@ -37,6 +42,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
+    // Enregistre un nouveau produit avec validation et traitement de l'image
     function store(Request $request)
     {
         $request->validate([
@@ -70,6 +76,7 @@ class ProductController extends Controller
                 mkdir(public_path($directory), 0755, true);
             }
 
+            // Redimensionne en 1000x1000 et compresse à 70% pour limiter le poids
             $image = Image::decode($file->getContent())->coverDown(1000, 1000);
             $encoded = $image->encodeUsingFileExtension($extension, quality: 70);
             file_put_contents($fullPath, $encoded);
@@ -88,6 +95,7 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('categories', 'product'));
     }
 
+    // Met à jour un produit ; remplace l'image sur le serveur si une nouvelle est fournie
     function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -100,6 +108,7 @@ class ProductController extends Controller
         $product->is_active = $request->has('is_active');
 
         if ($request->hasFile('image')) {
+            // Supprime l'ancienne image du serveur avant d'enregistrer la nouvelle
             if ($product->image) {
                 $oldPath = public_path($product->image);
                 if (file_exists($oldPath)) {
@@ -131,6 +140,7 @@ class ProductController extends Controller
     function delete($id)
     {
         $product = Product::findOrFail($id);
+        // Un produit lié à une commande ne peut pas être supprimé
         $orderItems = OrderItem::where('product_id', $product->id)->exists();
 
         if ($orderItems) {
@@ -147,6 +157,7 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Produit supprimé avec succès');
     }
 
+    // Active ou désactive la visibilité d'un produit en vitrine
     function changeStatus($id)
     {
         $product = Product::findOrFail($id);

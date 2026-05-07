@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+/*
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel
+ | Aucune modification apportée à ce fichier.
+ |----------------------------------------------------------
+ */
+
 /**
  * @extends Factory<User>
  */

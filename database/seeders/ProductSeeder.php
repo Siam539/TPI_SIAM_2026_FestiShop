@@ -6,6 +6,9 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
+/**
+ * Insère les produits de test répartis par catégorie (anniversaire, mariage, noël, halloween, prénatal).
+ */
 class ProductSeeder extends Seeder
 {
     public function run(): void
@@ -26,7 +29,7 @@ class ProductSeeder extends Seeder
                 'price'       => 18,
                 'stock'       => 25,
                 'is_active'   => true,
-                'image'       => 'images/products/Cyan_set.png',
+                'image'       => 'images/products/Cyan_set.jpg',
             ],
             [
                 'category_id' => $anniversaire,
@@ -36,7 +39,7 @@ class ProductSeeder extends Seeder
                 'price'       => 16,
                 'stock'       => 30,
                 'is_active'   => true,
-                'image'       => 'images/products/Blue_set.png',
+                'image'       => 'images/products/Blue_set.jpg',
             ],
             [
                 'category_id' => $anniversaire,
@@ -46,7 +49,7 @@ class ProductSeeder extends Seeder
                 'price'       => 9,
                 'stock'       => 50,
                 'is_active'   => true,
-                'image'       => 'images/products/Baloon_Set.png',
+                'image'       => 'images/products/Baloon_Set.jpg',
             ],
             [
                 'category_id' => $anniversaire,
@@ -56,7 +59,7 @@ class ProductSeeder extends Seeder
                 'price'       => 14,
                 'stock'       => 35,
                 'is_active'   => true,
-                'image'       => 'images/products/Golden_set.png',
+                'image'       => 'images/products/Golden_set.jpg',
             ],
 
             // Mariage
@@ -68,7 +71,7 @@ class ProductSeeder extends Seeder
                 'price'       => 34,
                 'stock'       => 15,
                 'is_active'   => true,
-                'image'       => 'images/products/Flower.png',
+                'image'       => 'images/products/Flower.jpg',
             ],
             [
                 'category_id' => $mariage,
@@ -78,7 +81,7 @@ class ProductSeeder extends Seeder
                 'price'       => 22,
                 'stock'       => 20,
                 'is_active'   => true,
-                'image'       => 'images/products/Book.png',
+                'image'       => 'images/products/Book.jpg',
             ],
             [
                 'category_id' => $mariage,
@@ -88,30 +91,12 @@ class ProductSeeder extends Seeder
                 'price'       => 8,
                 'stock'       => 35,
                 'is_active'   => true,
-                'image'       => 'images/products/Baloon.png',
+                'image'       => 'images/products/Baloon.jpg',
             ],
 
             // Bébé & Enfants
-            [
-                'category_id' => $prenatal,
-                'name'        => 'Bannière Baby Shower',
-                'slug'        => 'banniere-baby-shower',
-                'description' => 'Bannière pastel "Baby Shower" avec étoiles et lune. Parfaite pour accueillir le nouveau-né.',
-                'price'       => 8,
-                'stock'       => 25,
-                'is_active'   => true,
-                'image'       => 'images/products/Title.jpeg',
-            ],
-            [
-                'category_id' => $prenatal,
-                'name'        => 'Kit Décoration Licorne',
-                'slug'        => 'kit-decoration-licorne',
-                'description' => 'Kit complet : ballons, guirlande et chapeau de fête sur le thème licorne.',
-                'price'       => 14,
-                'stock'       => 20,
-                'is_active'   => true,
-                'image'       => 'images/products/Full_set.jpeg',
-            ],
+           
+           
 
             // Noël
             [
@@ -154,7 +139,7 @@ class ProductSeeder extends Seeder
                 'price'       => 5,
                 'stock'       => 40,
                 'is_active'   => true,
-                'image'       => 'images/products/Glass_set.png',
+                'image'       => 'images/products/Glass_set.jpg',
             ],
             [
                 'category_id' => $halloween,
@@ -164,7 +149,7 @@ class ProductSeeder extends Seeder
                 'price'       => 14,
                 'stock'       => 25,
                 'is_active'   => true,
-                'image'       => 'images/products/Glasses_Set.png',
+                'image'       => 'images/products/Glasses_Set.jpg',
             ],
 
     

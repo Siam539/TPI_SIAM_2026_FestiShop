@@ -1,3 +1,4 @@
+{{-- Formulaire de modification d'un produit existant avec remplacement optionnel de l'image --}}
 @extends('layouts.admin')
 
 @section('content')

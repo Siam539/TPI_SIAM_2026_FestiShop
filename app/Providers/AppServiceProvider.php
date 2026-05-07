@@ -1,5 +1,12 @@
 <?php
 
+/*
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel
+ | Modifié : ajout de Paginator::useBootstrapFive() pour la pagination Bootstrap 5
+ |----------------------------------------------------------
+ */
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;

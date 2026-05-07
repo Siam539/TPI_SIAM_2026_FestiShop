@@ -1,3 +1,4 @@
+{{-- Formulaire de création d'un utilisateur (customer ou manutentionnaire) par l'admin --}}
 @extends('layouts.admin')
 @section('content')
     <div class="card shadow-sm">

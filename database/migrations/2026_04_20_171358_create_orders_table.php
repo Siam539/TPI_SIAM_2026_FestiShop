@@ -1,5 +1,11 @@
 <?php
 
+/*
+ | Table : orders
+ | Stocke les commandes avec leur statut (open, preparation, awaiting, shipping, delivered)
+ | et le prix total figé au moment de la commande.
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

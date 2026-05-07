@@ -1,5 +1,11 @@
 <?php
 
+/*
+ | Table : order_items
+ | Lignes de commande : produit, quantité et prix unitaire figé au moment de l'achat.
+ | La suppression d'un produit est bloquée s'il apparaît dans une commande (onDelete restrict).
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

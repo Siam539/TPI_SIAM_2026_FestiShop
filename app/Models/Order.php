@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Représente une commande passée par un client.
+ * Statuts possibles : open, preparation, awaiting, shipping, delivered.
+ */
 #[Guarded(['id'])]
 class Order extends Model
 {

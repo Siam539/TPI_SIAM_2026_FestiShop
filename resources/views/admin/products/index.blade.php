@@ -1,3 +1,4 @@
+{{-- Liste des produits avec options de création, modification, activation et suppression --}}
 @extends('layouts.admin')
 
 @section('content')

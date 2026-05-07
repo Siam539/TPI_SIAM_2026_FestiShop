@@ -1,5 +1,11 @@
 <?php
 
+/*
+ | Table : cart_items
+ | Représente les articles dans le panier d'un utilisateur connecté.
+ | Supprimés automatiquement si l'utilisateur ou le produit est supprimé (cascade).
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

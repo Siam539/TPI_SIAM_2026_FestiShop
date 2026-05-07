@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+/**
+ * Gère le CRUD des catégories dans l'interface admin.
+ * Une catégorie ne peut pas être supprimée si elle contient des produits.
+ */
 class CategoryController extends Controller
 {
-    //
     public function index()
     {
         $categories = Category::orderBy('name', 'asc')->paginate(20)->withQueryString();
@@ -19,6 +22,7 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
+    // Valide et enregistre une nouvelle catégorie avec normalisation du slug
     public function store(Request $request)
     {
         $request->validate([
@@ -28,6 +32,7 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $request->name,
+            // Normalise le slug : minuscules et espaces remplacés par des tirets
             'slug' => strtolower(str_replace(' ', '-', $request->slug)),
         ]);
 
@@ -56,9 +61,11 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'Catégorie mise à jour avec succès.');
     }
 
+    // Vérifie l'intégrité avant suppression
     public function delete($id)
     {
         $category = Category::findOrFail($id);
+        // Empêche la suppression d'une catégorie qui contient encore des produits
         if ($category->products()->count() > 0) {
             return redirect()->route('admin.categories.index')->with('error', 'La catégorie ne peut pas être supprimée car elle contient des produits.');
         }

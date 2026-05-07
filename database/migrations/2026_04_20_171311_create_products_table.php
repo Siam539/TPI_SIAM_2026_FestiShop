@@ -1,5 +1,11 @@
 <?php
 
+/*
+ | Table : products
+ | Stocke les produits du catalogue avec image, stock, prix et lien vers une catégorie.
+ | La suppression d'une catégorie est bloquée si elle contient des produits (onDelete restrict).
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

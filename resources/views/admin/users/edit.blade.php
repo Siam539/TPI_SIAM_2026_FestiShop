@@ -1,3 +1,4 @@
+{{-- Formulaire de modification d'un utilisateur existant --}}
 @extends('layouts.admin')
 @section('content')
     <div class="card shadow-sm">
@@ -53,7 +54,7 @@
                     <div class="col-md-6 mb-3">
                         <label for="role" class="form-label">Rôle <span class="text-danger">*</span></label>
                         <select class="form-select" id="role" name="role" required>
-                            <option value="customer" {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>Customer</option>
+                            <option value="customer" {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>Client</option>
                             <option value="manutentionnaire" {{ old('role', $user->role) == 'manutentionnaire' ? 'selected' : '' }}>Manutentionnaire</option>
                         </select>
                         @error('role')

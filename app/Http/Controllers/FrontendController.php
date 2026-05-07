@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Gère toutes les pages accessibles aux visiteurs et clients :
+ * catalogue produits, panier, checkout, suivi des commandes et profil utilisateur.
+ */
 class FrontendController extends Controller
 {
+    // Affiche la page d'accueil avec les produits filtrés et triés
     public function index(Request $request)
     {
         $query = Product::query();
@@ -21,14 +27,24 @@ class FrontendController extends Controller
 
         if ($request->sort_by) {
             $query->orderBy('price', $request->sort_by);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        if ($request->category_id) {
+            $query->where('category_id', $request->category_id);
         }
 
         if ($request->in_stock == 'yes') {
             $query->where('stock', '>', 0);
         }
 
+        // Seuls les produits actifs sont affichés en vitrine
+        $query->where('is_active', '1');
+
         $products = $query->paginate(15)->withQueryString();
-        return view('frontend.index', compact('products'));
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('frontend.index', compact('products', 'categories'));
     }
 
     public function showProduct($slug)
@@ -53,6 +69,7 @@ class FrontendController extends Controller
         return view('frontend.cart', compact('cartItems', 'cartTotal', 'cartCount'));
     }
 
+    // Ajoute un produit au panier ou incrémente la quantité si déjà présent
     public function addToCart($id)
     {
         $product = Product::findOrFail($id);
@@ -72,6 +89,7 @@ class FrontendController extends Controller
         return redirect()->route('cart')->with('success', 'Produit ajouté avec succès au panier!');
     }
 
+    // Synchronise le panier stocké localement (visiteur non connecté) vers la base de données
     public function syncCart(Request $request)
     {
         $userId = auth()->user()->id;
@@ -128,6 +146,7 @@ class FrontendController extends Controller
         return view('frontend.checkout', compact('cartItems', 'cartTotal', 'cartCount'));
     }
 
+    // Valide la commande, crée l'Order et les OrderItems, puis vide le panier
     public function checkoutStore(Request $request)
     {
         $request->validate([
@@ -152,6 +171,7 @@ class FrontendController extends Controller
             $cartTotal += $item->product->price * $item->quantity;
         }
 
+        // Sauvegarde les adresses dans le profil utilisateur pour les prochaines commandes
         $user->billing_address = $request->billing_address;
         if ($request->different_shipping_address == 'yes') {
             $user->shipping_address = $request->shipping_address;
@@ -174,6 +194,7 @@ class FrontendController extends Controller
             $orderItem->save();
         }
 
+        // Vide le panier une fois la commande enregistrée
         CartItem::where('user_id', $user->id)->delete();
 
         return redirect()->route('order-confirmation', $order->id)->with('success', 'Commande passée avec succès!');
@@ -185,6 +206,7 @@ class FrontendController extends Controller
         return view('frontend.order-confirmation', compact('order'));
     }
 
+    // Retourne uniquement les commandes de l'utilisateur connecté
     public function orders()
     {
         $orders = Order::where('user_id', auth()->user()->id)->with(['orderItems.product.category'])->get();
@@ -245,6 +267,7 @@ class FrontendController extends Controller
         ]);
 
         $user = auth()->user();
+        // Vérifie que le mot de passe actuel est correct avant d'autoriser le changement
         if (!Hash::check($request->password_current, $user->password)) {
             return redirect()->route('profile')->with('error', 'Mot de passe actuel incorrect!');
         }

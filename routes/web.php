@@ -1,5 +1,16 @@
 <?php
 
+/*
+ |----------------------------------------------------------
+ | Projet                 : FestiShop
+ | TPI 2026             : Travail Pratique Individuel
+ | Candidat            : Kazi Siam
+ | Description        : Définition de toutes les routes de l'application.
+ |                             Trois niveaux d'accès : public (visiteur),
+ |                             auth (client connecté), admin / manutentionnaire.
+ |----------------------------------------------------------
+ */
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;

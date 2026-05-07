@@ -1,38 +1,14 @@
+{{-- Liste des commandes côté admin : suivi et mise à jour des statuts --}}
 @extends('layouts.admin')
 
 @section('content')
-
     <div class="my-4">
+
+        {{-- Session alerts --}}
+        @include('partials.session-alert')
 
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <h1 class="mb-0">Gestion des commandes</h1>
-            <button class="btn btn-primary">
-                <i class="fa-solid fa-plus me-2"></i>Créer une commande
-            </button>
-        </div>
-
-        {{-- Filtres --}}
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" class="form-control" placeholder="Rechercher par numéro ou client...">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <select class="form-select">
-                            <option selected>Tous les statuts</option>
-                            <option>Ouverte</option>
-                            <option>En préparation</option>
-                            <option>En attente de produit</option>
-                            <option>En cours d'envoi</option>
-                            <option>Livré</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
         </div>
 
         {{-- Tableau (de la + récente à la + ancienne) --}}
@@ -41,7 +17,7 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>N°</th>
+                            <th>#</th>
                             <th>Date</th>
                             <th>Client</th>
                             <th>Articles</th>
@@ -51,96 +27,91 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse ($orders as $order)
+                            <tr>
+                                <td><strong>#{{ $order->id }}</strong></td>
+                                <td>{{ $order->created_at->format('d-m-Y | H:i') }}</td>
+                                <td>{{ $order->user->name }}</td>
+                                <td><span class="badge bg-success">{{ $order->orderItems->sum('quantity') }}</span></td>
+                                <td><strong>{{ $order->total_price }} CHF</strong></td>
+                                <td>
+                                    @if ($order->status == 'open')
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="fa-solid fa-box me-1"></i>Ouverte
+                                        </span>
+                                    @elseif($order->status == 'preparation')
+                                        <span class="badge bg-info text-dark">
+                                            <i class="fa-solid fa-box me-1"></i>En préparation
+                                        </span>
+                                    @elseif($order->status == 'awaiting')
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="fa-solid fa-clock me-1"></i>En attente
+                                        </span>
+                                    @elseif($order->status == 'shipping')
+                                        <span class="badge bg-primary">
+                                            <i class="fa-solid fa-truck-fast me-1"></i>En cours d'envoi
+                                        </span>
+                                    @elseif($order->status == 'delivered')
+                                        <span class="badge bg-success">
+                                            <i class="fa-solid fa-circle-check me-1"></i>Livrée
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-flex justify-content-end gap-1">
+                                        <a href="{{ route('admin.order-details', $order->id) }}" class="btn btn-sm btn-outline-primary" title="Voir détails">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
 
-                        <tr>
-                            <td><strong>#00128</strong></td>
-                            <td>24 avril 2026</td>
-                            <td>Marie Leroy</td>
-                            <td>3</td>
-                            <td><strong>49.70 CHF</strong></td>
-                            <td><span class="badge bg-info text-dark">Ouverte</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary" title="Voir détails">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-success" title="Valider">
-                                    <i class="fa-solid fa-check"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>#00127</strong></td>
-                            <td>23 avril 2026</td>
-                            <td>John Doe</td>
-                            <td>1</td>
-                            <td><strong>14.90 CHF</strong></td>
-                            <td><span class="badge bg-warning text-dark">En préparation</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary" title="Voir détails">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-success" title="Valider">
-                                    <i class="fa-solid fa-check"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>#00126</strong></td>
-                            <td>21 avril 2026</td>
-                            <td>Pierre Dubois</td>
-                            <td>2</td>
-                            <td><strong>29.80 CHF</strong></td>
-                            <td><span class="badge bg-secondary">En attente de produit</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary" title="Voir détails">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-success" title="Valider">
-                                    <i class="fa-solid fa-check"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>#00125</strong></td>
-                            <td>18 avril 2026</td>
-                            <td>John Doe</td>
-                            <td>1</td>
-                            <td><strong>23.90 CHF</strong></td>
-                            <td><span class="badge bg-primary">En cours d'envoi</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary" title="Voir détails">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>#00124</strong></td>
-                            <td>15 avril 2026</td>
-                            <td>John Doe</td>
-                            <td>2</td>
-                            <td><strong>11.80 CHF</strong></td>
-                            <td><span class="badge bg-success">Livré</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary" title="Voir détails">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-
+                                        @if ($order->status == 'open')
+                                            <button class="btn btn-sm btn-info status-btn" data-id="{{ $order->id }}" data-status="preparation" title="En préparation">
+                                                <i class="fa-solid fa-box"></i>
+                                            </button>
+                                        @elseif($order->status == 'preparation')
+                                            <button class="btn btn-sm btn-primary status-btn" data-id="{{ $order->id }}" data-status="shipping" title="En cours d'envoi">
+                                                <i class="fa-solid fa-truck-fast"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-warning status-btn" data-id="{{ $order->id }}" data-status="awaiting" title="En attente">
+                                                <i class="fa-solid fa-clock"></i>
+                                            </button>
+                                        @elseif($order->status == 'awaiting')
+                                            <button class="btn btn-sm btn-primary status-btn" data-id="{{ $order->id }}" data-status="shipping" title="En cours d'envoi">
+                                                <i class="fa-solid fa-truck-fast"></i>
+                                            </button>
+                                        @elseif($order->status == 'shipping')
+                                            <button class="btn btn-sm btn-success status-btn" data-id="{{ $order->id }}" data-status="delivered" title="Livrée">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <div class="text-muted">
+                                        <i class="fa-solid fa-inbox fa-3x mb-3"></i>
+                                        <p class="h5">Aucune commande trouvée</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <div class="text-muted mt-3 small">
-            <i class="fa-solid fa-circle-info me-1"></i>
-            Les commandes sont affichées de la plus récente à la plus ancienne.
-        </div>
-
     </div>
-
 @endsection
+
+@push('scripts')
+    <script>
+        $('.status-btn').click(function() {
+            let orderId = $(this).data('id');
+            let status = $(this).data('status');
+            if (confirm("Êtes-vous sûr de vouloir changer le statut de la commande?")) {
+                let url = "{{ route('admin.order.status-update', ':orderId') }}".replace(':orderId', orderId) + '?status=' + status;
+                window.location.href = url;
+            }
+        });
+    </script>
+@endpush

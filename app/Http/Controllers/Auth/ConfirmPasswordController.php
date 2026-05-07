@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
 
+/*
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel UI (php artisan ui bootstrap --auth)
+ | Aucune modification apportée à ce fichier.
+ |----------------------------------------------------------
+ */
 class ConfirmPasswordController extends Controller
 {
     /*

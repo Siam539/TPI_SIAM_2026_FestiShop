@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
+/*
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel UI (php artisan ui bootstrap --auth)
+ | Aucune modification apportée à ce fichier.
+ |----------------------------------------------------------
+ */
 class VerificationController extends Controller
 {
     /*

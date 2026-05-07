@@ -1,3 +1,4 @@
+{{-- Liste des catégories avec options de création, modification et suppression --}}
 @extends('layouts.admin')
 
 @section('content')

@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/**
+ * Crée les comptes de test : un admin et un manutentionnaire.
+ */
 class UserSeeder extends Seeder
 {
     /**
@@ -14,9 +17,9 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'first_name' => 'Kazi',
-            'last_name' => 'Siam',
-            'email' => 'kazi.siam08@gmail.com',
+            'first_name' => 'Admin',
+            'last_name' => 'Main',
+            'email' => 'admin@gmail.com',
             'phone' => '+41786405091',
             'password' => bcrypt('12345678'),
             'role' => 'admin',
@@ -25,7 +28,7 @@ class UserSeeder extends Seeder
          User::create([
             'first_name' => 'Manager',
             'last_name' => 'Livreur',
-            'email' => 'kazi.siam09@gmail.com',
+            'email' => 'manager@gmail.com',
             'phone' => '+41786405092',
             'password' => bcrypt('12345678'),
             'role' => 'manutentionnaire',

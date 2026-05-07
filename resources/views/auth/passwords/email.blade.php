@@ -1,3 +1,9 @@
+{{--
+ |----------------------------------------------------------
+ | FICHIER GÉNÉRÉ AUTOMATIQUEMENT — Laravel UI (php artisan ui bootstrap --auth)
+ | Modifié : adapté au design et au layout du projet FestiShop
+ |----------------------------------------------------------
+--}}
 @extends('layouts.frontend')
 
 @section('content')
@@ -5,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header">Réinitialiser le mot de passe</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -18,7 +24,7 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-end">Adresse e-mail</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -34,7 +40,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
+                                    Envoyer le lien de réinitialisation
                                 </button>
                             </div>
                         </div>
